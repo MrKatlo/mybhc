@@ -1,5 +1,5 @@
 {
-  "name": "my-bhc",
+  "name": "expo",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
   "scripts": {
@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-navigation/native-stack": "^6.9.26",
     "expo": "~51.0.14",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
@@ -17,5 +18,15 @@
   "devDependencies": {
     "@babel/core": "^7.20.0"
   },
-  "private": true
+  "private": true,
+  "description": "mybhc",
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "nome"
+  ],
+  "author": "katlo plo",
+  "license": "ISC"
 }
