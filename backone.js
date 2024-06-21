@@ -1,198 +1,207 @@
-import { StatusBar } from 'expo-status-bar';
-import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { BackHandler } from 'react-native';
-import { StyleSheet, Image, Text, TextInput,NavigationContainer, Button, View, TouchableOpacity } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import landing from './landing';
-// component for login screen
-export default function login() {
-  //to get username and password output
-  const [usname, setUsername] = useState('');
-  const [pass, setPassword] = useState('');
-  //action for login btn
-  function logs() {
-    const stack= createNativeStackNavigator()
-    return(
-       <NavigationContainer>
-         <stack.Navigator>
-          <stack.Screen name='landing' component={landing}/>
-         </stack.Navigator>
-       </NavigationContainer>
-    )
-  
-  }
+import React, { useState, useEffect } from 'react';
+import { View,Image, Text, TextInput, Button, StyleSheet, ScrollView, Touchable, TouchableOpacity } from 'react-native';
+import { initializeApp } from '@firebase/app';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
+import DashBoard from './dash';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDjNw56wdME-m08v-bxMf3NODd4gcAvr9U",
+  authDomain: "bwbhc-939aa.firebaseapp.com",
+  projectId: "bwbhc-939aa",
+  storageBucket: "bwbhc-939aa.appspot.com",
+  messagingSenderId: "408379258697",
+  appId: "1:408379258697:web:d01784891cfc39ea4e0c98",
+  measurementId: "G-H0W0EL6Z8N"
+};
+const app = initializeApp(firebaseConfig);
+
+const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }) => {
   return (
-    <>
-      <View style={styles.toppanel}>
-        <Image style={styles.iconimage} source={require('./assets/menu.png')} />
-        <Text style={styles.txtreg}>Register</Text>
-      </View><View style={styles.forlogo}>
-        <Image style={styles.logoimage} source={require('./assets/logo.png')} />
+    <View style={styles.authContainer}>
+      <View>
+      <View style={styles.forlogin}>
+        <Image style={styles.logosty} source={require('./assets/logo.png')}/>
       </View>
+       <View style={styles.forinput}>
+       <Text style={styles.title}>{isLogin ? 'Sign In' : 'Sign Up'}</Text>
+    
+    <TextInput
+     style={styles.input}
+     value={email}
+     onChangeText={setEmail}
+     placeholder="Email"
+     autoCapitalize="none"
+   />
+   <TextInput
+     style={styles.input}
+     value={password}
+     onChangeText={setPassword}
+     placeholder="Password"
+     secureTextEntry
+   />
+   <View style={styles.buttonContainer}>
+     <TouchableOpacity style={styles.btnlog} onPress={handleAuthentication} color="#3498db" >
+       <Text style={styles.logtext}>
+       {isLogin ? 'Sign In' : 'Sign Up'}
+       </Text>
+     </TouchableOpacity>
+   </View>
+       </View>
 
-      <View style={styles.forinputs}>
-        <Text style={styles.txtlogin}>Log in with your credentials.</Text>
-        <TextInput style={styles.username}
-          onChangeText={username => setUsername(username)}
-          defaultValue={usname}
-          placeholder='Username' />
-        <TextInput style={styles.username}
-          onChangeText={password => setPassword(password)}
-          defaultValue={pass}
-          placeholder='Password' />
-        <Text style={styles.txtforgot}>Forgot your username or password?</Text>
-        <TouchableOpacity style={styles.btnlog}
-          onPress={logs}
-        >
-
-          <Text style={styles.txtloginow}>LogIn</Text>
-        </TouchableOpacity>
+      <View style={styles.bottomContainer}>
+        <Text style={styles.toggleText} onPress={() => setIsLogin(!isLogin)}>
+          {isLogin ? 'Need an account? Sign Up' : 'Already have an account? Sign In'}
+        </Text>
       </View>
-    </>
-  )
-}
-//testing the button/trying how to use it--backhandler api ---failed
-function btnlogin(){
-  useEffect(()=>{
-   const backAction = () =>{
-    console.log("tried to log in")
-    return false;
-    return true;
-   }
-  });
-
-  const backhandler=BackHandler.addEventListener(
-    'hardwareBackPress',
-    backAction,
-  )
+      </View>
+    </View>
+  );
 }
 
+function op(){
+  console.log("kakaskdh")
+}
+
+const AuthenticatedScreen = ({ user, handleAuthentication }) => {
+  return (// this is code for next screen after logging in
+    <View style={styles.authContainer}>
+      {/* <Text style={styles.title}>Welcome</Text>
+      <Text style={styles.elomailText}>{user.email}</Text>*/
+      //  <Button title="Logout" onPress={handleAuthentication}  color="#e74c3c" />
+       }
+      <DashBoard/>
+    </View>
+  );
+};
+export default App = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState(null); // Track user authentication state
+  const [isLogin, setIsLogin] = useState(true);
+
+  const auth = getAuth(app);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+
+    return () => unsubscribe();
+  }, [auth]);
+
+  
+  const handleAuthentication = async () => {
+    try {
+      if (user) {
+        // If user is already authenticated, log out
+        console.log('User logged out successfully!');
+        await signOut(auth);
+      } else {
+        // Sign in or sign up
+        if (isLogin) {
+          // Sign in
+          await signInWithEmailAndPassword(auth, email, password);
+         op();
+        } else {
+          // Sign up
+          await createUserWithEmailAndPassword(auth, email, password);
+          console.log('User created successfully!');
+        }
+      }
+    } catch (error) {
+      console.error('Authentication error:', error.message);
+    }
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      {user ? (
+        // Show user's email if user is authenticated
+        <AuthenticatedScreen user={user} handleAuthentication={handleAuthentication} />
+      ) : (
+        // Show sign-in or sign-up form if user is not authenticated
+        <AuthScreen
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+          handleAuthentication={handleAuthentication}
+        />
+      )}
+    </ScrollView>
+  );
+}
 const styles = StyleSheet.create({
-
-
-  txtlogin: {
-    color: "black",
-    paddingTop: 12,
-    fontWeight: 'bold',
-    fontSize: 18,
-    alignSelf: "center"
+  logtext:{
+ fontWeight:'bold',
+ alignSelf: 'center',
+ verticalAlign:'center',
+paddingTop:10,
+ color:"#AD2524"
   },
-  txtloginow: {
-    color: "white",
-    paddingTop: 12,
-    fontWeight: 'bold',
-    fontSize: 18,
-    alignSelf: "center"
+  forinput:{
+  paddingTop:'8%',
   },
-  txtforgot: {
-    color: "#FAA21B",
-    paddingTop: 8,
-    fontWeight: 'bold',
-    fontSize: 15,
-    alignSelf: "center"
+  container: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
   },
-  forlogo: {
-    alignSelf: "center"
-  },
-  forinputs: {
-    paddingTop: 50
-  },
-  username: {
-    borderWidth: 1.7,
+  authContainer: {
+    backgroundColor: '#fff',
+    padding: 0,
     borderRadius: 8,
-    height: 48,
-    width: 330,
-    alignSelf: "center",
-    marginTop: 30,
-    textAlignVertical: "center",
-    textAlign: "center",
+    width:"100%",
+    height:"100%"
   },
-  btnlog: {
-    borderWidth: 1.7,
+  forlogin:{
+   paddingTop:'10%'
+  },
+  btnlog:{
+ height:40,
+ alignContent:"center",
+  },
+  logosty:{
+    alignItems:'center',
+    width:"100%",
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  input: {
+    height: 40,
+    borderColor: 'black',
+    borderWidth:1,
+     width:300,
+    marginBottom: 16,
+    padding: 8,
     borderRadius: 8,
-    height: 58,
-    width: 330,
-    backgroundColor: "#FAA21B",
-    alignSelf: "center",
+    alignSelf:'center'
+  },
+  buttonContainer: {
+    marginBottom: 16,
+    backgroundColor:'#FAA21B',
+    borderColor: 'black',
+    borderWidth:1,
+    borderRadius: 8,
+    width:300,
+    alignSelf:'center'
+  },
+  toggleText: {
+    color: '#3498db',
+    textAlign: 'center',
+      
+  },
+  bottomContainer: {
     marginTop: 20,
-    textAlignVertical: "center",
-    textAlign: "center",
   },
-
-  toppanel: {
-    paddingTop: 30,
-    paddingLeft: 10,
-    paddingRight: 10,
-    flexDirection: "row",
-    justifyContent: 'space-between',
-
-  },
-  iconimage: {
-    width: 35,
-    height: 35,
-  },
-  logoimage: {
-    width: 300,
-    height: 200,
-
-  },
-  txtreg: {
-    color: "#FAA21B",
-    paddingTop: 12,
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  txtlogin: {
-    color: "black",
-    paddingTop: 12,
-    fontWeight: 'bold',
+  emailText: {
     fontSize: 18,
-    alignSelf: "center"
+    textAlign: 'center',
+    marginBottom: 20,
   },
-  txtloginow: {
-    color: "white",
-    paddingTop: 12,
-    fontWeight: 'bold',
-    fontSize: 18,
-    alignSelf: "center"
-  },
-  txtforgot: {
-    color: "#FAA21B",
-    paddingTop: 8,
-    fontWeight: 'bold',
-    fontSize: 15,
-    alignSelf: "center"
-  },
-  forlogo: {
-    alignSelf: "center"
-  },
-  forinputs: {
-    paddingTop: 50
-  },
-  username: {
-    borderWidth: 1.7,
-    borderRadius: 8,
-    height: 48,
-    width: 330,
-    alignSelf: "center",
-    marginTop: 30,
-    textAlignVertical: "center",
-    textAlign: "center",
-  },
-  btnlog: {
-    borderWidth: 1.7,
-    borderRadius: 8,
-    height: 58,
-    width: 330,
-    backgroundColor: "#FAA21B",
-    alignSelf: "center",
-    marginTop: 20,
-    textAlignVertical: "center",
-    textAlign: "center",
-  },
-
 });
-
-

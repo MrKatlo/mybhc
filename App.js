@@ -1,168 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { View,Image, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
-import { initializeApp } from '@firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
+import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
+import Login from './backone'
+import Landing from './landing'
+import { StyleSheet, Image, Text, TextInput,Button, View, TouchableOpacity } from 'react-native';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDjNw56wdME-m08v-bxMf3NODd4gcAvr9U",
-  authDomain: "bwbhc-939aa.firebaseapp.com",
-  projectId: "bwbhc-939aa",
-  storageBucket: "bwbhc-939aa.appspot.com",
-  messagingSenderId: "408379258697",
-  appId: "1:408379258697:web:d01784891cfc39ea4e0c98",
-  measurementId: "G-H0W0EL6Z8N"
-};
-const app = initializeApp(firebaseConfig);
-
-const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }) => {
+export default function App() {
   return (
-    <View style={styles.authContainer}>
-      <View>
-        <Image source={require('./assets/logo.png')}/>
-      </View>
-       <Text style={styles.title}>{isLogin ? 'Sign In' : 'Sign Up'}</Text>
-    
-       <TextInput
-        style={styles.input}
-        value={email}
-        onChangeText={setEmail}
-        placeholder="Email"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-        placeholder="Password"
-        secureTextEntry
-      />
-      <View style={styles.buttonContainer}>
-        <Button title={isLogin ? 'Sign In' : 'Sign Up'} onPress={handleAuthentication} color="#3498db" />
-      </View>
-
-      <View style={styles.bottomContainer}>
-        <Text style={styles.toggleText} onPress={() => setIsLogin(!isLogin)}>
-          {isLogin ? 'Need an account? Sign Up' : 'Already have an account? Sign In'}
-        </Text>
-      </View>
+    <View style={styles.container}>
+      
+      
+    <Login/>
     </View>
   );
 }
 
-function op(){
-  console.log("kakaskdh")
-}
-
-const AuthenticatedScreen = ({ user, handleAuthentication }) => {
-  return (
-    <View style={styles.authContainer}>
-      <Text style={styles.title}>Welcome</Text>
-      <Text style={styles.elomailText}>{user.email}</Text>
-      <Button title="Logout" onPress={handleAuthentication}  color="#e74c3c" />
-    </View>
-  );
-};
-export default App = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null); // Track user authentication state
-  const [isLogin, setIsLogin] = useState(true);
-
-  const auth = getAuth(app);
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-
-    return () => unsubscribe();
-  }, [auth]);
-
-  
-  const handleAuthentication = async () => {
-    try {
-      if (user) {
-        // If user is already authenticated, log out
-        console.log('User logged out successfully!');
-        await signOut(auth);
-      } else {
-        // Sign in or sign up
-        if (isLogin) {
-          // Sign in
-          await signInWithEmailAndPassword(auth, email, password);
-         op();
-        } else {
-          // Sign up
-          await createUserWithEmailAndPassword(auth, email, password);
-          console.log('User created successfully!');
-        }
-      }
-    } catch (error) {
-      console.error('Authentication error:', error.message);
-    }
-  };
-
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {user ? (
-        // Show user's email if user is authenticated
-        <AuthenticatedScreen user={user} handleAuthentication={handleAuthentication} />
-      ) : (
-        // Show sign-in or sign-up form if user is not authenticated
-        <AuthScreen
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          isLogin={isLogin}
-          setIsLogin={setIsLogin}
-          handleAuthentication={handleAuthentication}
-        />
-      )}
-    </ScrollView>
-  );
-}
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#f0f0f0',
-  },
-  authContainer: {
-    width: '80%',
-    maxWidth: 400,
+    flex: 1,
     backgroundColor: '#fff',
-    padding: 16,
-    borderRadius: 8,
 
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  input: {
-    height: 40,
-    borderColor: '#ddd',
-    borderWidth: 1,
-    marginBottom: 16,
-    padding: 8,
-    borderRadius: 4,
-  },
-  buttonContainer: {
-    marginBottom: 16,
-  },
-  toggleText: {
-    color: '#3498db',
-    textAlign: 'center',
-  },
-  bottomContainer: {
-    marginTop: 20,
-  },
-  emailText: {
-    fontSize: 18,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-});
+})
