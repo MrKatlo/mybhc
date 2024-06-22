@@ -19,6 +19,7 @@ const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogi
   return (
     <View style={styles.authContainer}>
       <View>
+      <Image source={require('./assets/menu.png')} style={styles.menuControl} />
       <View style={styles.forlogin}>
         <Image style={styles.logosty} source={require('./assets/logo.png')}/>
       </View>
@@ -144,6 +145,7 @@ paddingTop:10,
   paddingTop:'8%',
   },
   container: {
+    top: '5%',
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -173,26 +175,26 @@ paddingTop:10,
     textAlign: 'center',
   },
   input: {
-    height: 40,
+    height: 50,
     borderColor: 'black',
     borderWidth:1,
      width:300,
     marginBottom: 16,
     padding: 8,
     borderRadius: 8,
-    alignSelf:'center'
+    alignSelf:'center',
+    marginBottom : 30,
   },
   buttonContainer: {
     marginBottom: 16,
     backgroundColor:'#FAA21B',
-    borderColor: 'black',
-    borderWidth:1,
     borderRadius: 8,
     width:300,
-    alignSelf:'center'
+    alignSelf:'center',
+    height: 50,
   },
   toggleText: {
-    color: '#3498db',
+    color: '#faa21b',
     textAlign: 'center',
       
   },
@@ -203,5 +205,11 @@ paddingTop:10,
     fontSize: 18,
     textAlign: 'center',
     marginBottom: 20,
+  },
+  menuControl:{
+    width: 30,
+    height:50,
+    left: 20,
+
   },
 });
