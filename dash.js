@@ -4,6 +4,8 @@ import { initializeApp } from '@firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
 import style from './backone'
 import { StatusBar } from 'expo-status-bar';
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyDjNw56wdME-m08v-bxMf3NODd4gcAvr9U",
     authDomain: "bwbhc-939aa.firebaseapp.com",
@@ -28,6 +30,12 @@ export default function DashBoard() {
                 <TextInput style={Stylers.searchinput} placeholder='Search' ></TextInput>
             </View>
             <View style={Stylers.formenu}>
+            <Image source={require('./assets/rent.png')}/>
+            <Image source={require('./assets/pay.png')}/>
+            <Image source={require('./assets/statement.png')}/>
+            <Image source={require('./assets/report.png')}/>
+            <Image source={require('./assets/info.png')}/>
+            
            
             </View>
             { <View style={Stylers.tabs}>
@@ -66,12 +74,15 @@ const Stylers = StyleSheet.create({
     
 height:'36%',
 width:'100%',
-backgroundColor:"red"
+backgroundColor:"#fff"
     },
     logo: {
         alignSelf: 'flex-start',
         width: 50,
         height: 40,
+        display:"flex",
+        alignItems:"center",
+        justifyContent:"center",
       
     },
     forsplash: {
