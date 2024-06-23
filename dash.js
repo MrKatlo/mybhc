@@ -30,11 +30,17 @@ export default function DashBoard() {
                 <TextInput style={Stylers.searchinput} placeholder='Search' ></TextInput>
             </View>
             <View style={Stylers.formenu}>
+
             <Image source={require('./assets/rent.png')} style={Stylers.menuLogo} />
+            <Text>View Housing</Text>
             <Image source={require('./assets/pay.png')} style={Stylers.menuLogo} />
+            <Text>Payments</Text>
             <Image source={require('./assets/statement.png')} style={Stylers.menuLogo} />
+            <Text>Staments</Text>
             <Image source={require('./assets/report.png')} style={Stylers.menuLogo} />
+            <Text>Reporting</Text>
             <Image source={require('./assets/info.png')} style={Stylers.menuLogo} />
+            <Text>Enquiries</Text>
             
            
             </View>
@@ -77,13 +83,13 @@ width:'100%',
 flexDirection: "row",
 flexWrap: "wrap",
 justifyContent: "space-between",
-padding: 10,
+padding: 10
 
     },
     menuLogo:{
         height:90,
         width:70,
-       
+        resizeMode:"cover"
     },
     logo: {
         alignSelf: 'flex-start',
