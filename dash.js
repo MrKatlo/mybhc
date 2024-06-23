@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text, TextInput, Button, StyleSheet, ScrollView, Touchable, TouchableOpacity } from 'react-native';
+import { View, Image, Text, TextInput, Button, StyleSheet, ScrollView, Touchable, TouchableOpacity, SafeAreaView } from 'react-native';
 import { initializeApp } from '@firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
 import style from './backone'
+import { StatusBar } from 'expo-status-bar';
 const firebaseConfig = {
     apiKey: "AIzaSyDjNw56wdME-m08v-bxMf3NODd4gcAvr9U",
     authDomain: "bwbhc-939aa.firebaseapp.com",
@@ -15,7 +16,7 @@ const firebaseConfig = {
 
 export default function DashBoard() {
     return (
-        <View style={Stylers.dashcont}>
+        <SafeAreaView style={Stylers.dashcont}>
             <View style={Stylers.forlogo}>
                 <Image style={Stylers.logo} source={require('./assets/logo.png')} />
             </View>
@@ -27,9 +28,7 @@ export default function DashBoard() {
                 <TextInput style={Stylers.searchinput} placeholder='Search' ></TextInput>
             </View>
             <View style={Stylers.formenu}>
-                      <Text>
-                        menu here
-                      </Text>
+           
             </View>
             { <View style={Stylers.tabs}>
                 <View>
@@ -45,7 +44,7 @@ export default function DashBoard() {
                     <Image style={Stylers.tablogo} source={require('./assets/person.png')} />
                 </View>
             </View>}
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -59,13 +58,13 @@ const Stylers = StyleSheet.create({
         alignSelf:"center"
     },
     tablogo:{
-        width: 50,
+        width: 30,
         height: 40,
         padding:10
     },
     formenu:{
     
-height:'38%',
+height:'36%',
 width:'100%',
 backgroundColor:"red"
     },
@@ -96,7 +95,7 @@ backgroundColor:"red"
     },
     searchbar: {
         width: '95%',
-        height: 65,
+        height: 60,
         borderWidth: 2,
         borderColor: '#AD2524',
         marginTop: 20,
@@ -104,7 +103,8 @@ backgroundColor:"red"
         borderRadius: 27,
         flexDirection: "row",
         gap: 5,
-        paddingBottom:15,
+        paddingBottom:1,
+        marginBottom :10,
     },
     forlogo: {
 
@@ -118,5 +118,7 @@ backgroundColor:"red"
         flexGrow: 1,
         width: '100%',
         backgroundColor: '#fff',
+        paddingTop: "0.5%",
+        paddingBottom: '3%',
     }
 });
