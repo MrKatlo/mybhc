@@ -30,11 +30,11 @@ export default function DashBoard() {
                 <TextInput style={Stylers.searchinput} placeholder='Search' ></TextInput>
             </View>
             <View style={Stylers.formenu}>
-            <Image source={require('./assets/rent.png')}/>
-            <Image source={require('./assets/pay.png')}/>
-            <Image source={require('./assets/statement.png')}/>
-            <Image source={require('./assets/report.png')}/>
-            <Image source={require('./assets/info.png')}/>
+            <Image source={require('./assets/rent.png')} style={Stylers.menuLogo} />
+            <Image source={require('./assets/pay.png')} style={Stylers.menuLogo} />
+            <Image source={require('./assets/statement.png')} style={Stylers.menuLogo} />
+            <Image source={require('./assets/report.png')} style={Stylers.menuLogo} />
+            <Image source={require('./assets/info.png')} style={Stylers.menuLogo} />
             
            
             </View>
@@ -66,23 +66,29 @@ const Stylers = StyleSheet.create({
         alignSelf:"center"
     },
     tablogo:{
-        width: 30,
+        width: 40,
         height: 40,
         padding:10
     },
     formenu:{
-    
+    flex:1,
 height:'36%',
 width:'100%',
-backgroundColor:"#fff"
+flexDirection: "row",
+flexWrap: "wrap",
+justifyContent: "space-between",
+padding: 10,
+
+    },
+    menuLogo:{
+        height:90,
+        width:70,
+       
     },
     logo: {
         alignSelf: 'flex-start',
-        width: 50,
+        width: 55,
         height: 40,
-        display:"flex",
-        alignItems:"center",
-        justifyContent:"center",
       
     },
     forsplash: {
