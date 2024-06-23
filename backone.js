@@ -167,7 +167,8 @@ paddingTop:10,
   },
   logosty:{
     alignItems:'center',
-    width:"100%",
+    width:"87%",
+    left: "8%",
   },
   title: {
     fontSize: 24,
