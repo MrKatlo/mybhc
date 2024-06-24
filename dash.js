@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Image, Text, TextInput, Button, StyleSheet, ScrollView, Touchable, TouchableOpacity, SafeAreaView } from 'react-native';
 import { initializeApp } from '@firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
@@ -27,10 +28,14 @@ export default function DashBoard() {
         return (
           <View style={Stylers.menuContainer}>
             <MenuItem iconSource={require('./assets/rent.png')} label="View Houses" />
-            <MenuItem iconSource={require('./assets/report.png')} label="Reports" />
-            <MenuItem iconSource={require('./assets/info.png')} label="General Enquiries" />
             <MenuItem iconSource={require('./assets/pay.png')} label="Make Payments" />
             <MenuItem iconSource={require('./assets/statement.png')} label="View Statements" />
+            <MenuItem iconSource={require('./assets/report.png')} label="Reports" />
+            <MenuItem iconSource={require('./assets/info.png')} label="General Enquiries"  />
+            <MenuItem iconSource={require('./assets/add.png')} label=""  />
+           
+           
+            
             
           </View>
         );
@@ -39,6 +44,7 @@ export default function DashBoard() {
       
     return (
         <SafeAreaView style={Stylers.dashcont}>
+        <StatusBar style='auto'/>
             <View style={Stylers.forlogo}>
                 <Image style={Stylers.logo} source={require('./assets/logo.png')} />
             </View>
@@ -50,7 +56,7 @@ export default function DashBoard() {
                 <TextInput style={Stylers.searchinput} placeholder='Search' ></TextInput>
             </View>
          
-            <View style={Stylers.formenu}>
+            <View style={Stylers.menuContainer}>
     
            <Menu/>
             </View>
@@ -74,15 +80,16 @@ export default function DashBoard() {
 
 const Stylers = StyleSheet.create({
     tabs: {
-        flex: 1,
+      
         justifyContent: 'space-between', // Align content to the bottom
         alignItems: 'center', // Center horizontally if needed
         flexDirection:"row",
         width:"100%",
-        alignSelf:"center",
         backgroundColor:"#faa21b",
-        height: 30,
-        paddingBottom:10,
+        height: 56,
+        paddingHorizontal: 20,
+        position:'absolute',
+        bottom: 0,
     },
     tablogo:{
         width: 40,
@@ -95,16 +102,11 @@ height:'36%',
 width:'100%',
 flexDirection: "row",
 flexWrap: "wrap",
-justifyContent: "space-between",
 padding: 10,
-backgroundColor: "red"
+
 
     },
-    menuLogo:{
-        height:90,
-        width:70,
-        resizeMode:"cover"
-    },
+  
     logo: {
         alignSelf: 'flex-start',
         width: 55,
@@ -155,22 +157,30 @@ backgroundColor: "red"
         flexGrow: 1,
         width: '100%',
         backgroundColor: '#fff',
-        paddingTop: "0.5%",
+        paddingTop: "5%",
         paddingBottom: '3%',
     },
     menuContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap', // This ensures items wrap to the next row
     justifyContent: 'space-between',
+    height: '36%',
+    width: "100%",
   },
   menuItem: {
     alignItems: 'center',
-  width: '30%',
+  width: '33%',
     marginVertical: 10,
+    marginTop:20,
   },
   icon: {
-    width: 40,
-    height: 40,
+    width: 60,
+    height: 50,
+    marginBottom:20
+    
+  },
+  last:{
+    left: '-20%',
   },
 
 });
