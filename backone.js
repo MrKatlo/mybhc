@@ -4,6 +4,7 @@ import { initializeApp } from '@firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
 import DashBoard from './dash';
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyDjNw56wdME-m08v-bxMf3NODd4gcAvr9U",
   authDomain: "bwbhc-939aa.firebaseapp.com",
@@ -16,10 +17,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }) => {
+ 
+  
+
   return (
     <View style={styles.authContainer}>
       <View>
+     
+     
       <Image source={require('./assets/menu.png')} style={styles.menuControl} />
+      
       <View style={styles.forlogin}>
         <Image style={styles.logosty} source={require('./assets/logo.png')}/>
       </View>
@@ -75,6 +82,8 @@ const AuthenticatedScreen = ({ user, handleAuthentication }) => {
   );
 };
 export default Getin= () => {
+
+  //Authentication code
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null); // Track user authentication state
@@ -213,4 +222,15 @@ paddingTop:10,
     left: 20,
 
   },
+  sideMenu: {
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  bottom: 0,
+  width: 300,
+  backgroundColor: '#fff',
+  padding: 20,
+  borderRightWidth: 1,
+  borderRightColor: '#ccc',
+},
 });

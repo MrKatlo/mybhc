@@ -29,20 +29,26 @@ export default function DashBoard() {
                 <Image style={Stylers.searchicon} source={require('./assets/search.png')} />
                 <TextInput style={Stylers.searchinput} placeholder='Search' ></TextInput>
             </View>
+            //menu items
             <View style={Stylers.formenu}>
+            <View style={menuItem}><Image source={require('./assets/rent.png')} style={Stylers.menuLogo} />
+            <Text style={Stylers.menuLabel}>View Housing</Text>
+            </View>
 
-            <Image source={require('./assets/rent.png')} style={Stylers.menuLogo} />
-            <Text>View Housing</Text>
-            <Image source={require('./assets/pay.png')} style={Stylers.menuLogo} />
-            <Text>Payments</Text>
+            <View style={menuItem}> <Image source={require('./assets/pay.png')} style={Stylers.menuLogo} />
+            <Text style={Stylers.menuLabel}>Payments</Text>
+            </View>
+            <View style={menuItem}>
             <Image source={require('./assets/statement.png')} style={Stylers.menuLogo} />
-            <Text>Staments</Text>
-            <Image source={require('./assets/report.png')} style={Stylers.menuLogo} />
-            <Text>Reporting</Text>
-            <Image source={require('./assets/info.png')} style={Stylers.menuLogo} />
-            <Text>Enquiries</Text>
-            
-           
+            <Text style={Stylers.menuLabel}>Staments</Text>
+            </View>
+            <View style={menuItem}><Image source={require('./assets/report.png')} style={Stylers.menuLogo} />
+            <Text style={Stylers.menuLabel}>Reporting</Text>
+            </View>
+            <View style={menuItem}><Image source={require('./assets/info.png')} style={Stylers.menuLogo} />
+            <Text style={Stylers.menuLabel}>Enquiries</Text>
+            </View>
+
             </View>
             { <View style={Stylers.tabs}>
                 <View>
@@ -68,13 +74,16 @@ const Stylers = StyleSheet.create({
         justifyContent: 'space-between', // Align content to the bottom
         alignItems: 'center', // Center horizontally if needed
         flexDirection:"row",
-        width:"90%",
-        alignSelf:"center"
+        width:"100%",
+        alignSelf:"center",
+        backgroundColor:"#faa21b",
+        height: 30,
+        paddingBottom:10,
     },
     tablogo:{
         width: 40,
-        height: 40,
-        padding:10
+        height: 30,
+    
     },
     formenu:{
     flex:1,
