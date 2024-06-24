@@ -17,6 +17,26 @@ const firebaseConfig = {
 };
 
 export default function DashBoard() {
+    const MenuItem = ({ iconSource, label }) => (
+        <View style={Stylers.menuItem}>
+          <Image source={iconSource} style={Stylers.icon} />
+          <Text>{label}</Text>
+        </View>
+      );
+      const Menu = () => {
+        return (
+          <View style={Stylers.menuContainer}>
+            <MenuItem iconSource={require('./assets/rent.png')} label="View Houses" />
+            <MenuItem iconSource={require('./assets/report.png')} label="Reports" />
+            <MenuItem iconSource={require('./assets/info.png')} label="General Enquiries" />
+            <MenuItem iconSource={require('./assets/pay.png')} label="Make Payments" />
+            <MenuItem iconSource={require('./assets/statement.png')} label="View Statements" />
+            
+          </View>
+        );
+      };
+      
+      
     return (
         <SafeAreaView style={Stylers.dashcont}>
             <View style={Stylers.forlogo}>
@@ -29,26 +49,10 @@ export default function DashBoard() {
                 <Image style={Stylers.searchicon} source={require('./assets/search.png')} />
                 <TextInput style={Stylers.searchinput} placeholder='Search' ></TextInput>
             </View>
-            //menu items
+         
             <View style={Stylers.formenu}>
-            <View style={menuItem}><Image source={require('./assets/rent.png')} style={Stylers.menuLogo} />
-            <Text style={Stylers.menuLabel}>View Housing</Text>
-            </View>
-
-            <View style={menuItem}> <Image source={require('./assets/pay.png')} style={Stylers.menuLogo} />
-            <Text style={Stylers.menuLabel}>Payments</Text>
-            </View>
-            <View style={menuItem}>
-            <Image source={require('./assets/statement.png')} style={Stylers.menuLogo} />
-            <Text style={Stylers.menuLabel}>Staments</Text>
-            </View>
-            <View style={menuItem}><Image source={require('./assets/report.png')} style={Stylers.menuLogo} />
-            <Text style={Stylers.menuLabel}>Reporting</Text>
-            </View>
-            <View style={menuItem}><Image source={require('./assets/info.png')} style={Stylers.menuLogo} />
-            <Text style={Stylers.menuLabel}>Enquiries</Text>
-            </View>
-
+    
+           <Menu/>
             </View>
             { <View style={Stylers.tabs}>
                 <View>
@@ -92,7 +96,8 @@ width:'100%',
 flexDirection: "row",
 flexWrap: "wrap",
 justifyContent: "space-between",
-padding: 10
+padding: 10,
+backgroundColor: "red"
 
     },
     menuLogo:{
@@ -152,5 +157,20 @@ padding: 10
         backgroundColor: '#fff',
         paddingTop: "0.5%",
         paddingBottom: '3%',
-    }
+    },
+    menuContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap', // This ensures items wrap to the next row
+    justifyContent: 'space-between',
+  },
+  menuItem: {
+    alignItems: 'center',
+  width: '30%',
+    marginVertical: 10,
+  },
+  icon: {
+    width: 40,
+    height: 40,
+  },
+
 });
