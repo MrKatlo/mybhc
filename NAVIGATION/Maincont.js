@@ -49,7 +49,7 @@ export default function Maincont() {
             >
                 <Image
                     style={styles.tabIcon}
-                    source={tabIcons[tabName]} // Use the imported icon directly
+                    source={tabIcons[tabName]} 
                 />
                 <Text style={[styles.tabLabel, isSelected && styles.selectedLabel]}>
                     {label}
