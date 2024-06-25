@@ -10,7 +10,7 @@ export default function DashBoard() {
 return(
     <View style={Stylers.menuItem}>
      
-      <Text>asss</Text>
+      <Text>settings</Text>
     </View>)
 }
  
