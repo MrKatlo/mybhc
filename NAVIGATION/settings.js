@@ -7,47 +7,17 @@ import { StatusBar } from 'expo-status-bar';
 
 
 export default function DashBoard() {
-  const MenuItem = ({ iconSource, label }) => (
+return(
     <View style={Stylers.menuItem}>
-      <Image source={iconSource} style={Stylers.icon} />
-      <Text>{label}</Text>
-    </View>
-  );
-  const Menu = () => {
-    return (
-      <View style={Stylers.menuContainer}>
-        <MenuItem iconSource={require('./assets/rent.png')} label="View Houses" />
-        <MenuItem iconSource={require('./assets/pay.png')} label="Make Payments" />
-        <MenuItem iconSource={require('./assets/statement.png')} label="View Statements" />
-        <MenuItem iconSource={require('./assets/report.png')} label="Reports" />
-        <MenuItem iconSource={require('./assets/info.png')} label="General Enquiries" />
-        <MenuItem iconSource={require('./assets/add.png')} label="" />
-
-      </View>
-    );
-  };
-
-
-  return (
-    <SafeAreaView style={Stylers.dashcont}>
-      <StatusBar style='auto' />
-      <View style={Stylers.forlogo}>
-        <Image style={Stylers.logo} source={require('./assets/logo.png')} />
-      </View>
-
-      <Image style={Stylers.forslash} source={require('./assets/plash.png')} />
-
-      <View style={Stylers.searchbar}>
-        <Image style={Stylers.searchicon} source={require('./assets/search.png')} />
-        <TextInput style={Stylers.searchinput} placeholder='Search' ></TextInput>
-      </View>
-      {
-        Menu()
-      }
-
-    </SafeAreaView>
-  )
+     
+      <Text>asss</Text>
+    </View>)
 }
+ 
+
+
+
+ 
 
 const Stylers = StyleSheet.create({
 

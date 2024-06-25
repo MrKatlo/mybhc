@@ -3,11 +3,12 @@ import { View,Image, Text, TextInput, Button, StyleSheet, ScrollView, Touchable,
 import { initializeApp } from '@firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
 import DashBoard from './dash';
+import Maincont from './NAVIGATION/Maincont';
 
 
 const firebaseConfig = {
   apiKey: "AIzaSyDjNw56wdME-m08v-bxMf3NODd4gcAvr9U",
-  authDomain: "bwbhc-939aa.firebaseapp.com",
+  authDomain: "bwbhc-939aa.firrebaseapp.com",
   projectId: "bwbhc-939aa",
   storageBucket: "bwbhc-939aa.appspot.com",
   messagingSenderId: "408379258697",
@@ -77,7 +78,7 @@ const AuthenticatedScreen = ({ user, handleAuthentication }) => {
       <Text style={styles.elomailText}>{user.email}</Text>*/
       //  <Button title="Logout" onPress={handleAuthentication}  color="#e74c3c" />
        }
-      <DashBoard/>
+      <Maincont/>
     </View>
   );
 };

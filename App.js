@@ -4,13 +4,14 @@ import Login from './backone'
 import Landing from './landing'
 import { StyleSheet, Image, Text, TextInput,Button, View, TouchableOpacity } from 'react-native';
 import DashBoard from './dash';
+import Maincontainer from './NAVIGATION/Maincont';
 
 export default function App() {
   return (
     <View style={styles.container}>
       
       
-    <DashBoard/>
+    <Login/>
     </View>
   );
 }
