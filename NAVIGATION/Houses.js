@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 
-const HousesScreen = () => {
+const Houses = () => {
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
@@ -140,4 +140,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HousesScreen;
+export default Houses;
