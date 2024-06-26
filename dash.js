@@ -1,29 +1,44 @@
 import React from 'react';
 import { View, Image, Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import {Navigationcontainer, useNavigation } from "@react-navigation/native";
+import {createStackNavigator} from "react-navigation/stack";
+import ReportsScreen from "./ReportsScreen";
+import HousesScreen from "./HousesScreen";
+import PaymentsScreen from "./PaymentsScreen";
+import StatementsScreen from "./StatementsScreen";
+import EnquiriesScreen from "./EnquiriesScreen";
 
-export default function DashBoard() {
-  const handleMenuItemPress = (label) => {
-    console.log(`Pressed ${label}`);
-    // Implement your logic here
+const Stack = createStackNavigator();
+
+// Component for each menu item
+const MenuItem = ({ iconSource, label, routeName }) => {
+  const navigation = useNavigation();
+
+  const handlePress = () => {
+    navigation.navigate(routeName);
   };
 
-  const MenuItem = ({ iconSource, label, onPress }) => (
-    <TouchableOpacity style={Stylers.menuItem} onPress={() => onPress(label)}>
-      <Image source={iconSource} style={Stylers.icon} />
+  return (
+    <TouchableOpacity style={styles.menuItem} onPress={handlePress}>
+      <Image source={iconSource} style={styles.icon} />
       <Text>{label}</Text>
     </TouchableOpacity>
   );
+};
+
+export default function DashBoard() {
+ 
 
   const Menu = () => {
     return (
       <View style={Stylers.menuContainer}>
-        <MenuItem iconSource={require('./assets/rent.png')} label="View Houses" onPress={handleMenuItemPress} />
-        <MenuItem iconSource={require('./assets/pay.png')} label="Make Payments" onPress={handleMenuItemPress} />
-        <MenuItem iconSource={require('./assets/statement.png')} label="View Statements" onPress={handleMenuItemPress} />
-        <MenuItem iconSource={require('./assets/report.png')} label="Reports" onPress={handleMenuItemPress} />
-        <MenuItem iconSource={require('./assets/info.png')} label="General Enquiries" onPress={handleMenuItemPress} />
-        <MenuItem iconSource={require('./assets/add.png')} label="" onPress={handleMenuItemPress} />
+        <MenuItem iconSource={require('./assets/rent.png')} label="View Houses" routeName= "Houses" />
+        <MenuItem iconSource={require('./assets/pay.png')} label="Make Payments" routeName= "Payments"  />
+        <MenuItem iconSource={require('./assets/statement.png')} label="View Statements" routeName= "Statements" />
+        <MenuItem iconSource={require('./assets/report.png')} label="Reports" routeName= "Reports"  />
+        <MenuItem iconSource={require('./assets/info.png')} label="General Enquiries"  routeName= "Enquiries"/>
+        <MenuItem iconSource={require('./assets/add.png')} label=""  />
       </View>
     );
   };
@@ -41,8 +56,17 @@ export default function DashBoard() {
         <Image style={Stylers.searchicon} source={require('./assets/search.png')} />
         <TextInput style={Stylers.searchinput} placeholder='Search' />
       </View>
-
-      <Menu />
+<      NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Menu" component={MenuScreen} />
+        <Stack.Screen name="Houses" component={HousesScreen} />
+        <Stack.Screen name="Reports" component={ReportsScreen} />
+        <Stack.Screen name="Enquiries" component={EnquiriesScreen} />
+        <Stack.Screen name="Payments" component={PaymentsScreen} />
+        <Stack.Screen name="Statements" component={StatementsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    
     </SafeAreaView>
   );
 }
