@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Image, Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import {Navigationcontainer, useNavigation } from "@react-navigation/native";
-import {createStackNavigator} from "react-navigation/stack";
+import {NavigationContainer, useNavigation } from "@react-navigation/native";
+import {createStackNavigator} from "@react-navigation/stack";
 import ReportsScreen from "./ReportsScreen";
 import HousesScreen from "./HousesScreen";
 import PaymentsScreen from "./PaymentsScreen";
 import StatementsScreen from "./StatementsScreen";
 import EnquiriesScreen from "./EnquiriesScreen";
+import Maincont.js from "./NAVIGATION/Maincont.js";
 
 const Stack = createStackNavigator();
 
@@ -20,8 +21,8 @@ const MenuItem = ({ iconSource, label, routeName }) => {
   };
 
   return (
-    <TouchableOpacity style={styles.menuItem} onPress={handlePress}>
-      <Image source={iconSource} style={styles.icon} />
+    <TouchableOpacity style={Stylers.menuItem} onPress={handlePress}>
+      <Image source={iconSource} style={Stylers.icon} />
       <Text>{label}</Text>
     </TouchableOpacity>
   );
@@ -58,7 +59,7 @@ export default function DashBoard() {
       </View>
 <      NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Menu" component={MenuScreen} />
+        <Stack.Screen name="Menu" component={Menu} />
         <Stack.Screen name="Houses" component={HousesScreen} />
         <Stack.Screen name="Reports" component={ReportsScreen} />
         <Stack.Screen name="Enquiries" component={EnquiriesScreen} />
@@ -66,13 +67,13 @@ export default function DashBoard() {
         <Stack.Screen name="Statements" component={StatementsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-    
+    <Maincont/>
     </SafeAreaView>
   );
 }
 
 const Stylers = StyleSheet.create({
-  btn: {
+  /*btn: {
     width: '' // Update as necessary
   },
   tablogo: {
@@ -86,7 +87,7 @@ const Stylers = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     padding: 10,
-  },
+  },*/
   logo: {
     alignSelf: 'flex-start',
     width: 55,
@@ -121,10 +122,10 @@ const Stylers = StyleSheet.create({
     paddingBottom: 1,
     marginBottom: 10,
   },
-  forlogo: {},
+  /*forlogo: {},
   lash: {
     alignSelf: 'center',
-  },
+  },*/
   dashcont: {
     flexGrow: 1,
     width: '100%',
@@ -145,11 +146,11 @@ const Stylers = StyleSheet.create({
     marginVertical: 10,
     marginTop: 20,
   },
-  icon: {
+icon: {
     width: 60,
     height: 50,
   },
-  last: {
+  /*last: {
     left: '-20%',
-  },
+  },*/
 });
