@@ -14,7 +14,7 @@ const HousesScreen = () => {
           <Image source={require('./assets/search.png')} style={styles.icon} />
           <Text>Search by Location</Text>
         </TouchableOpacity>
-        <Image source={require('./tune.png')} style={styles.tune} />
+        <Image source={require('./assets/home.png')} style={styles.tune} />
       </View>
       <View style={styles.content}>
         <View style={styles.header}>

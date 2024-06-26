@@ -4,7 +4,8 @@ import { initializeApp } from '@firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
 import DashBoard from './dash';
 import Maincont from './NAVIGATION/Maincont';
-
+import HousesScreen from './HousesScreen';
+import ViewHousesModal from './modal';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDjNw56wdME-m08v-bxMf3NODd4gcAvr9U",
