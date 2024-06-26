@@ -1,238 +1,108 @@
-import React, { useState, useEffect } from 'react';
-import { View,Image, Text, TextInput, Button, StyleSheet, ScrollView, Touchable, TouchableOpacity } from 'react-native';
-import { initializeApp } from '@firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
-import DashBoard from './dash';
-import Maincont from './NAVIGATION/Maincont';
-import HousesScreen from './HousesScreen';
-import ViewHousesModal from './modal';
+import React, { useState } from 'react';
+import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import DefaultUi from './searchbar';
+import Pay from './NAVIGATION/payments';
+import Reports from './NAVIGATION/Reports';
+import Statement from './NAVIGATION/statements';
+import Info from './NAVIGATION/info';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDjNw56wdME-m08v-bxMf3NODd4gcAvr9U",
-  authDomain: "bwbhc-939aa.firrebaseapp.com",
-  projectId: "bwbhc-939aa",
-  storageBucket: "bwbhc-939aa.appspot.com",
-  messagingSenderId: "408379258697",
-  appId: "1:408379258697:web:d01784891cfc39ea4e0c98",
-  measurementId: "G-H0W0EL6Z8N"
-};
-const app = initializeApp(firebaseConfig);
+export default function DashBoard() {
+  const [toshow, setToshow] = useState('');
 
-const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }) => {
- 
-  
+  const handleMenuItemPress = (label) => {
+    setToshow(label); // Update the state with the selected label
+  };
 
-  return (
-    <View style={styles.authContainer}>
-      <View>
-     
-     
-      <Image source={require('./assets/menu.png')} style={styles.menuControl} />
-      
-      <View style={styles.forlogin}>
-        <Image style={styles.logosty} source={require('./assets/logo.png')}/>
-      </View>
-       <View style={styles.forinput}>
-       <Text style={styles.title}>{isLogin ? 'Sign In' : 'Sign Up'}</Text>
+  // Menu item component
+  const MenuItem = ({ iconSource, label }) => (
+    <TouchableOpacity style={Stylers.menuItem} onPress={() => handleMenuItemPress(label)}>
+      <Image source={iconSource} style={Stylers.icon} />
+      <Text>{label}</Text>
+    </TouchableOpacity>
+  );
+const Menu=(
+  <View style={Stylers.menuContainer}>
+  <MenuItem iconSource={require('./assets/rent.png')} label="View Houses" />
+  <MenuItem iconSource={require('./assets/pay.png')} label="Make Payments" />
+  <MenuItem iconSource={require('./assets/statement.png')} label="View Statements" />
+  <MenuItem iconSource={require('./assets/report.png')} label="Reports" />
+  <MenuItem iconSource={require('./assets/info.png')} label="General Enquiries" />
+  <MenuItem iconSource={require('./assets/add.png')} label="" onPress={handleMenuItemPress} />
+  {/* Add more menu items as needed */}
+</View>
+)
+  // Views components
+  const DefaultView = (
+    <View>
+      <DefaultUi/>
+       {Menu}
+    </View>
+  )
+  const PaymentView = <Pay />;
+  const ReportsView = <Reports />;
+  const StatementsView = <Statement />;
+  const InfoView = <Info />;
+
+  // Function to return current view based on toshow state
+  const getCurrentView = () => {
     
-    <TextInput
-     style={styles.input}
-     value={email}
-     onChangeText={setEmail}
-     placeholder="Email"
-     autoCapitalize="none"
-   />
-   <TextInput
-     style={styles.input}
-     value={password}
-     onChangeText={setPassword}
-     placeholder="Password"
-     secureTextEntry
-   />
-   <View style={styles.buttonContainer}>
-     <TouchableOpacity style={styles.btnlog} onPress={handleAuthentication} color="#3498db" >
-       <Text style={styles.logtext}>
-       {isLogin ? 'Sign In' : 'Sign Up'}
-       </Text>
-     </TouchableOpacity>
-   </View>
-       </View>
-
-      <View style={styles.bottomContainer}>
-        <Text style={styles.toggleText} onPress={() => setIsLogin(!isLogin)}>
-          {isLogin ? 'Need an account? Sign Up' : 'Already have an account? Sign In'}
-        </Text>
-      </View>
-      </View>
-    </View>
-  );
-}
-
-function op(){
-  console.log("kakaskdh")
-}
-
-const AuthenticatedScreen = ({ user, handleAuthentication }) => {
-  return (// this is code for next screen after logging in
-    <View style={styles.authContainer}>
-      {/* <Text style={styles.title}>Welcome</Text>
-      <Text style={styles.elomailText}>{user.email}</Text>*/
-      //  <Button title="Logout" onPress={handleAuthentication}  color="#e74c3c" />
-       }
-      <Maincont/>
-    </View>
-  );
-};
-export default Getin= () => {
-
-  //Authentication code
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null); // Track user authentication state
-  const [isLogin, setIsLogin] = useState(true);
-
-  const auth = getAuth(app);
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-
-    return () => unsubscribe();
-  }, [auth]);
-
-  
-  const handleAuthentication = async () => {
-    try {
-      if (user) {
-        // If user is already authenticated, log out
-        console.log('User logged out successfully!');
-        await signOut(auth);
-      } else {
-        // Sign in or sign up
-        if (isLogin) {
-          // Sign in
-          await signInWithEmailAndPassword(auth, email, password);
-         op();
-        } else {
-          // Sign up
-          await createUserWithEmailAndPassword(auth, email, password);
-          console.log('User created successfully!');
-        }
-      }
-    } catch (error) {
-      console.error('Authentication error:', error.message);
+    switch (toshow) {
+      case 'View Houses':
+        console.log("See houses");
+        return DefaultView;
+      case 'Make Payments':
+        console.log("Make payments");
+        return PaymentView;
+      case 'View Statements':
+        console.log("View statements");
+        // Implement logic for viewing statements
+        return StatementsView;
+      case 'Reports':
+        console.log("View reports");
+        // Implement logic for viewing reports
+        return ReportsView;
+      case 'General Enquiries':
+        console.log("General enquiries");
+        // Implement logic for general enquiries
+        return InfoView;
+      default:
+        console.log("Unknown action");
+        return DefaultView; // Or you can return null if you prefer
     }
   };
 
+  // Render component
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {user ? (
-        // Show user's email if user is authenticated
-        <AuthenticatedScreen user={user} handleAuthentication={handleAuthentication} />
-      ) : (
-        // Show sign-in or sign-up form if user is not authenticated
-        <AuthScreen
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          isLogin={isLogin}
-          setIsLogin={setIsLogin}
-          handleAuthentication={handleAuthentication}
-        />
-      )}
-    </ScrollView>
+    <View style={Stylers.container}>
+      <View style={Stylers.container}>
+        {getCurrentView()}
+      </View>
+   
+      
+    </View>
   );
 }
-const styles = StyleSheet.create({
-  logtext:{
- fontWeight:'bold',
- alignSelf: 'center',
- verticalAlign:'center',
-paddingTop:10,
- color:"#AD2524"
-  },
-  forinput:{
-  paddingTop:'8%',
-  },
+
+const Stylers = StyleSheet.create({
   container: {
-    top: '5%',
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-  },
-  authContainer: {
+    flex: 1,
     backgroundColor: '#fff',
-    padding: 0,
-    borderRadius: 8,
-    width:"100%",
-    height:"100%"
   },
-  forlogin:{
-   paddingTop:'10%'
-  },
-  btnlog:{
- height:40,
- alignContent:"center",
-  },
-  logosty:{
-    alignItems:'center',
-    width:"87%",
-    left: "8%",
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  input: {
-    height: 50,
-    borderColor: 'black',
-    borderWidth:1,
-     width:300,
-    marginBottom: 16,
-    padding: 8,
-    borderRadius: 8,
-    alignSelf:'center',
-    marginBottom : 30,
-  },
-  buttonContainer: {
-    marginBottom: 16,
-    backgroundColor:'#FAA21B',
-    borderRadius: 8,
-    width:300,
-    alignSelf:'center',
-    height: 50,
-  },
-  toggleText: {
-    color: '#faa21b',
-    textAlign: 'center',
-      
-  },
-  bottomContainer: {
+  menuItem: {
+    alignItems: 'center',
+    width: '33%',
+    marginVertical: 10,
     marginTop: 20,
   },
-  emailText: {
-    fontSize: 18,
-    textAlign: 'center',
-    marginBottom: 20,
+  menuContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    height: '36%',
+    width: '100%',
   },
-  menuControl:{
-    width: 30,
-    height:50,
-    left: 20,
-
+  icon: {
+    width: 60,
+    height: 50,
   },
-  sideMenu: {
-  position: 'absolute',
-  left: 0,
-  top: 0,
-  bottom: 0,
-  width: 300,
-  backgroundColor: '#fff',
-  padding: 20,
-  borderRightWidth: 1,
-  borderRightColor: '#ccc',
-},
 });
